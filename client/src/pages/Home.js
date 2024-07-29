@@ -6,13 +6,17 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-5xl flex items-center">
                 <div className="w-1/2 p-4">
-                    <h1 className="text-3xl font-bold mb-4">PLANNING</h1>
-                    <p className="mb-6">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    <h1 className="text-4xl font-bold mb-4 text-blue-600">TaskMaster</h1>
+                    <p className="mb-6 text-gray-700">
+                        Welcome to TaskMaster, your ultimate task management app! TaskMaster helps you organize and prioritize your tasks efficiently, ensuring you stay on top of your workload. Whether you are managing a personal to-do list or handling a team project, TaskMaster provides the tools you need to succeed.
                     </p>
+                   
+                    <Link to="/signup" className="text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md">
+                        Get Started
+                    </Link>
                 </div>
                 <div className="w-1/2">
-                    <img src={`${process.env.PUBLIC_URL}/image.png`} alt="Planning" className="w-full h-auto" />
+                    <img src={`${process.env.PUBLIC_URL}/image1.jpeg`} alt="Task Management" className="w-full h-auto" />
                 </div>
             </div>
         </div>

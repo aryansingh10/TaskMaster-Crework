@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
-// Sign up endpoint
+
 router.post('/signup', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// Login endpoint
+
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err) {

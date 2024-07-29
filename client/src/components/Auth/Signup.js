@@ -23,10 +23,10 @@ const Signup = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-purple-300 to-purple-500">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-500">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
                 <h1 className="text-3xl font-bold text-center mb-6">
-                    Create a new <span className="text-purple-600">Task Management Tool</span> Account
+                    Create a new <span className="text-blue-600">TaskMaster</span> Account
                 </h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <form onSubmit={handleSubmit}>
@@ -35,7 +35,7 @@ const Signup = () => {
                         placeholder="Your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-purple-500"
+                        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                         required
                     />
                     <input
@@ -43,18 +43,18 @@ const Signup = () => {
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-purple-500"
+                        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                         required
                     />
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition"
+                        className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
                     >
                         Signup
                     </button>
                 </form>
                 <p className="mt-4 text-center">
-                    Already have an account? <a href="/login" className="text-purple-600 underline">Login here</a>
+                    Already have an account? <a href="/login" className="text-blue-600 underline">Login here</a>
                 </p>
             </div>
         </div>

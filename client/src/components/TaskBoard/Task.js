@@ -1,4 +1,3 @@
-// src/components/TaskBoard/Task.js
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from './constants';
@@ -10,11 +9,20 @@ const Task = ({ task, onEdit, onDelete }) => {
         item: { id: task._id, status: task.status },
     });
 
+    // Define classes for priority based on its value
+    const priorityClasses = {
+        Low: 'text-green-500 font-bold',
+        Medium: 'text-yellow-500 font-bold',
+        High: 'text-red-500 font-bold',
+    };
+
     return (
         <div ref={drag} className="bg-gray-100 p-4 mb-4 rounded-lg shadow-md">
             <h3 className="text-lg font-bold">{task.title}</h3>
             <p>{task.description}</p>
-            <p>{task.priority}</p>
+            <p className={`${priorityClasses[task.priority]}`}>
+                {task.priority}
+            </p>
             <p>{new Date(task.deadline).toLocaleDateString()}</p>
             <div className="flex justify-between items-center mt-2">
                 <button

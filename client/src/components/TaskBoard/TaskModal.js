@@ -3,8 +3,38 @@ import React from 'react';
 const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
     if (!show) return null;
 
-   
     const { title = '', description = '', status = 'To-Do', priority = 'Low', deadline = '' } = task;
+
+    // Get today's date in yyyy-mm-dd format
+    const today = new Date().toISOString().split('T')[0];
+
+    // Format the date to dd/mm/yyyy
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('en-GB').format(date); // 'en-GB' locale formats date to dd/mm/yyyy
+    };
+
+    // Parse the date from dd/mm/yyyy to yyyy-mm-dd
+    const parseDate = (dateString) => {
+        if (!dateString) return '';
+        const [day, month, year] = dateString.split('/').map(Number);
+        return new Date(year, month - 1, day).toISOString().split('T')[0];
+    };
+
+    // Format deadline for display
+    const formattedDeadline = formatDate(deadline);
+
+    // Log the current priority value to debug
+    // Define classes for priority based on its value
+    const priorityClasses = {
+        Low: 'border-green-500 text-green-500',
+        Medium: 'border-yellow-500 text-yellow-500',
+        High: 'border-red-500 text-red-500',
+    };
+    console.log("Current Priority:", priority);
+
+
 
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
@@ -59,7 +89,7 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
                             name="priority"
                             value={priority}
                             onChange={onChange}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${priorityClasses[priority]}`}
                         >
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
@@ -71,10 +101,14 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
                             Deadline
                         </label>
                         <input
-                            type="date"
+                            type="text"
                             name="deadline"
-                            value={deadline ? deadline.split('T')[0] : ''}
-                            onChange={onChange}
+                            value={formattedDeadline}
+                            onChange={(e) => {
+                                const parsedDate = parseDate(e.target.value);
+                                onChange({ target: { name: 'deadline', value: parsedDate } });
+                            }}
+                            placeholder="dd/mm/yyyy"
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                     </div>
