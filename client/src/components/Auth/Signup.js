@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Signup = () => {
     const { signup } = useAuth();
@@ -13,9 +14,11 @@ const Signup = () => {
         e.preventDefault();
         try {
             await signup(email, password);
+            toast.success('Signup successful!');
             navigate('/dashboard');
         } catch (error) {
             setError('Failed to create an account');
+            toast.error('Failed to create an account');
         }
     };
 
@@ -23,7 +26,7 @@ const Signup = () => {
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-purple-300 to-purple-500">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
                 <h1 className="text-3xl font-bold text-center mb-6">
-                    Create a new <span className="text-purple-600">TaskManagementTool</span> Account
+                    Create a new <span className="text-purple-600">Task Management Tool</span> Account
                 </h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <form onSubmit={handleSubmit}>

@@ -1,3 +1,4 @@
+// src/pages/Dashboard.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -25,10 +26,8 @@ const Dashboard = () => {
                 headers: { Authorization: `Bearer ${authTokens}` },
             });
             setTasks(response.data);
-            console.log("Fetched tasks:", response.data); // Debugging
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
-            console.error('Error fetching tasks:', error.response ? error.response.data : error.message);
         }
     };
 
@@ -79,7 +78,6 @@ const Dashboard = () => {
             setShowModal(false);
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
-            console.error('Error saving task:', error.response ? error.response.data : error.message);
         }
     };
 
@@ -91,7 +89,23 @@ const Dashboard = () => {
             setTasks(tasks.filter(task => task._id !== taskId));
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
-            console.error('Error deleting task:', error.response ? error.response.data : error.message);
+        }
+    };
+
+    const handleMoveTask = async (taskId, newStatus) => {
+        try {
+            const task = tasks.find(task => task._id === taskId);
+            const updatedTask = { ...task, status: newStatus };
+            
+            // Update task status in the backend
+            await api.put(`/tasks/${taskId}`, updatedTask, {
+                headers: { Authorization: `Bearer ${authTokens}` },
+            });
+
+            // Update task status in the local state
+            setTasks(tasks.map(task => (task._id === taskId ? updatedTask : task)));
+        } catch (error) {
+            setError(error.response ? error.response.data.message : error.message);
         }
     };
 
@@ -101,8 +115,6 @@ const Dashboard = () => {
         'Under Review': tasks.filter(task => task.status === 'Under Review'),
         'Completed': tasks.filter(task => task.status === 'Completed'),
     };
-
-    console.log("Filtered tasks:", filteredTasks); // Debugging
 
     return (
         <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
@@ -115,10 +127,10 @@ const Dashboard = () => {
                 Add Task
             </button>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Column title="To-Do" tasks={filteredTasks['To-Do']} onEdit={handleEditTask} onDelete={handleDelete} />
-                <Column title="In Progress" tasks={filteredTasks['In Progress']} onEdit={handleEditTask} onDelete={handleDelete} />
-                <Column title="Under Review" tasks={filteredTasks['Under Review']} onEdit={handleEditTask} onDelete={handleDelete} />
-                <Column title="Completed" tasks={filteredTasks['Completed']} onEdit={handleEditTask} onDelete={handleDelete} />
+                <Column title="To-Do" tasks={filteredTasks['To-Do']} onEdit={handleEditTask} onDelete={handleDelete} onMoveTask={handleMoveTask} />
+                <Column title="In Progress" tasks={filteredTasks['In Progress']} onEdit={handleEditTask} onDelete={handleDelete} onMoveTask={handleMoveTask} />
+                <Column title="Under Review" tasks={filteredTasks['Under Review']} onEdit={handleEditTask} onDelete={handleDelete} onMoveTask={handleMoveTask} />
+                <Column title="Completed" tasks={filteredTasks['Completed']} onEdit={handleEditTask} onDelete={handleDelete} onMoveTask={handleMoveTask} />
             </div>
             {showModal && (
                 <TaskModal
