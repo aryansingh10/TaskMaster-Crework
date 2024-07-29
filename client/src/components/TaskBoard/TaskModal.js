@@ -15,26 +15,22 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
         return new Intl.DateTimeFormat('en-GB').format(date); // 'en-GB' locale formats date to dd/mm/yyyy
     };
 
-    // Parse the date from dd/mm/yyyy to yyyy-mm-dd
+    // Parse the date from yyyy-mm-dd to dd/mm/yyyy for display
     const parseDate = (dateString) => {
         if (!dateString) return '';
-        const [day, month, year] = dateString.split('/').map(Number);
-        return new Date(year, month - 1, day).toISOString().split('T')[0];
+        const [year, month, day] = dateString.split('-').map(Number);
+        return new Intl.DateTimeFormat('en-GB').format(new Date(year, month - 1, day)); // 'en-GB' locale formats date to dd/mm/yyyy
     };
 
-    // Format deadline for display
-    const formattedDeadline = formatDate(deadline);
+    // Format deadline for display in the date input
+    const formattedDeadline = deadline ? deadline.split('T')[0] : '';
 
-    // Log the current priority value to debug
     // Define classes for priority based on its value
     const priorityClasses = {
         Low: 'border-green-500 text-green-500',
         Medium: 'border-yellow-500 text-yellow-500',
         High: 'border-red-500 text-red-500',
     };
-    console.log("Current Priority:", priority);
-
-
 
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
@@ -50,6 +46,7 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
                             name="title"
                             value={title}
                             onChange={onChange}
+                            placeholder="Enter task title"
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             required
                         />
@@ -62,6 +59,7 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
                             name="description"
                             value={description}
                             onChange={onChange}
+                            placeholder="Enter task description"
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                     </div>
@@ -101,28 +99,25 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
                             Deadline
                         </label>
                         <input
-                            type="text"
+                            type="date"
                             name="deadline"
                             value={formattedDeadline}
-                            onChange={(e) => {
-                                const parsedDate = parseDate(e.target.value);
-                                onChange({ target: { name: 'deadline', value: parsedDate } });
-                            }}
-                            placeholder="dd/mm/yyyy"
+                            onChange={onChange}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            min={today}
                         />
                     </div>
                     <div className="flex justify-end space-x-4">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="bg-gray-500 text-white px-4 py-2 rounded-md"
+                            className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
                         >
                             {task._id ? 'Update Task' : 'Add Task'}
                         </button>

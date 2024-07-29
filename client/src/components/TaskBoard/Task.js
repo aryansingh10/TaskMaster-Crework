@@ -2,6 +2,9 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from './constants';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import toast from 'react-hot-toast'; // Import react-hot-toast for notifications
+import { confirmAlert } from 'react-confirm-alert'; // Import react-confirm-alert
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS for react-confirm-alert
 
 const Task = ({ task, onEdit, onDelete }) => {
     const [, drag] = useDrag({
@@ -14,6 +17,31 @@ const Task = ({ task, onEdit, onDelete }) => {
         Low: 'text-green-500 font-bold',
         Medium: 'text-yellow-500 font-bold',
         High: 'text-red-500 font-bold',
+    };
+
+    const handleDelete = () => {
+        confirmAlert({
+            title: 'Confirm Deletion',
+            message: 'Are you sure you want to delete this task?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        onDelete(task._id)
+                            .then(() => {
+                                toast.success('Task deleted successfully');
+                            })
+                            .catch(() => {
+                                toast.error('Failed to delete task');
+                            });
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => {}
+                }
+            ]
+        });
     };
 
     return (
@@ -33,7 +61,7 @@ const Task = ({ task, onEdit, onDelete }) => {
                     <FaEdit size={20} />
                 </button>
                 <button
-                    onClick={() => onDelete(task._id)}
+                    onClick={handleDelete}
                     className="text-red-500 hover:text-red-700"
                     aria-label="Delete"
                 >

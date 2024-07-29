@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-300 via-blue-400 to-blue-600">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-5xl flex items-center">
                 <div className="w-1/2 p-4">
                     <h1 className="text-4xl font-bold mb-4 text-blue-600">TaskMaster</h1>
                     <p className="mb-6 text-gray-700">
                         Welcome to TaskMaster, your ultimate task management app! TaskMaster helps you organize and prioritize your tasks efficiently, ensuring you stay on top of your workload. Whether you are managing a personal to-do list or handling a team project, TaskMaster provides the tools you need to succeed.
                     </p>
-                   
                     <Link to="/signup" className="text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md">
                         Get Started
                     </Link>

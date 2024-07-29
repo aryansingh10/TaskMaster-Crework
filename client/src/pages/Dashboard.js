@@ -1,4 +1,3 @@
-// src/pages/Dashboard.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -117,12 +116,12 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
-            <h1 className="text-3xl font-bold text-center mb-8">Dashboard</h1>
+        <div className="container mx-auto p-4 min-h-screen bg-gradient-to-r from-teal-300 via-blue-300 to-indigo-400">
+            <h1 className="text-3xl font-bold text-center mb-8 text-black">Dashboard</h1>
             {error && <div className="text-red-500 text-center mb-4">{error}</div>}
             <button
                 onClick={handleAddTask}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
+                className="bg-blue-700 text-white px-4 py-2 rounded-md mb-4"
             >
                 Add Task
             </button>
