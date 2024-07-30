@@ -14,7 +14,7 @@ const taskRoutes = require('./routes/tasks');
 
 const app = express();
 
-// Middleware
+// Middlewaregi
 app.use(
     cors({
       origin: "*",
