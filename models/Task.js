@@ -15,12 +15,11 @@ const TaskSchema = new mongoose.Schema({
     },
     priority: {
         type: String,
-        enum: ['Low', 'Medium', 'High'],
+        enum: ['Low', 'Medium', 'Urgent'],
         default: 'Medium',
     },
     deadline: {
-        type: Date,
-        default: () => new Date() // Sets default to today's date
+        type: Date
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

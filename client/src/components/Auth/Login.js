@@ -18,7 +18,7 @@ const Login = () => {
             navigate('/dashboard');
         } catch (error) {
             setError('Failed to login');
-            toast.error('Failed to login');
+            toast.error('Invalid email or password');
         }
     };
 

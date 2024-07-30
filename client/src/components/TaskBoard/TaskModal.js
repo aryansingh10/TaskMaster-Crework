@@ -29,7 +29,7 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
     const priorityClasses = {
         Low: 'border-green-500 text-green-500',
         Medium: 'border-yellow-500 text-yellow-500',
-        High: 'border-red-500 text-red-500',
+        Urgent: 'border-red-500 text-red-500',
     };
 
     return (
@@ -91,7 +91,7 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
                         >
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
-                            <option value="High">High</option>
+                            <option value="Urgent">Urgent</option>
                         </select>
                     </div>
                     <div className="mb-4">

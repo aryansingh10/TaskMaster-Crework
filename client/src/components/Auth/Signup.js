@@ -16,9 +16,10 @@ const Signup = () => {
             await signup(email, password);
             toast.success('Signup successful!');
             navigate('/dashboard');
+
         } catch (error) {
             setError('Failed to create an account');
-            toast.error('Failed to create an account');
+            toast.error('A user with this email already exists');
         }
     };
 

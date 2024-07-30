@@ -17,7 +17,10 @@ router.post('/signup', async (req, res) => {
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         console.error('Signup error:', error);
-        res.status(500).json({ message: 'Server error' });
+        if (error.name === 'UserExistsError') {
+            return res.status(400).json({ message: 'A user with the given email is already registered' });
+        }
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 

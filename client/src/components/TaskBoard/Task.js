@@ -16,7 +16,7 @@ const Task = ({ task, onEdit, onDelete }) => {
     const priorityClasses = {
         Low: 'text-green-500 font-bold',
         Medium: 'text-yellow-500 font-bold',
-        High: 'text-red-500 font-bold',
+        Urgent: 'text-red-500 font-bold',
     };
 
     const handleDelete = () => {

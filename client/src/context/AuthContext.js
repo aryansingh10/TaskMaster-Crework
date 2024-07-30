@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') || null);
+    const [authTokens, setAuthTokens] = useState(() => sessionStorage.getItem('authTokens') || null);
     const [user, setUser] = useState(() => {
-        const user = localStorage.getItem('user');
+        const user = sessionStorage.getItem('user');
         try {
             return user ? JSON.parse(user) : null;
         } catch (error) {
@@ -22,8 +23,8 @@ export const AuthProvider = ({ children }) => {
             const response = await api.post('/auth/login', { email, password });
             setAuthTokens(response.data.token);
             setUser(response.data.user);
-            localStorage.setItem('authTokens', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            sessionStorage.setItem('authTokens', response.data.token);
+            sessionStorage.setItem('user', JSON.stringify(response.data.user));
             navigate('/dashboard');
         } catch (error) {
             console.error('Failed to login:', error);
@@ -36,8 +37,8 @@ export const AuthProvider = ({ children }) => {
             const response = await api.post('/auth/signup', { email, password });
             setAuthTokens(response.data.token);
             setUser(response.data.user);
-            localStorage.setItem('authTokens', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            sessionStorage.setItem('authTokens', response.data.token);
+            sessionStorage.setItem('user', JSON.stringify(response.data.user));
             navigate('/dashboard');
         } catch (error) {
             console.error('Failed to sign up:', error);
@@ -48,8 +49,9 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setAuthTokens(null);
         setUser(null);
-        localStorage.removeItem('authTokens');
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('authTokens');
+        sessionStorage.removeItem('user');
+        toast.success('Logged out successfully');
         navigate('/');
     };
 

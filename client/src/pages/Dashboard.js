@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import Column from '../components/TaskBoard/Column';
 import TaskModal from '../components/TaskBoard/TaskModal';
+import toast from 'react-hot-toast';
 
 const Dashboard = () => {
     const { authTokens } = useAuth();
@@ -68,15 +69,18 @@ const Dashboard = () => {
                     headers: { Authorization: `Bearer ${authTokens}` },
                 });
                 setTasks(tasks.map(task => (task._id === response.data._id ? response.data : task)));
+                toast.success('Task updated successfully!');
             } else {
                 const response = await api.post('/tasks', currentTask, {
                     headers: { Authorization: `Bearer ${authTokens}` },
                 });
                 setTasks([...tasks, response.data]);
+                toast.success('Task added successfully!');
             }
             setShowModal(false);
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
+            toast.error(error.response ? error.response.data.message : error.message);
         }
     };
 
@@ -86,8 +90,10 @@ const Dashboard = () => {
                 headers: { Authorization: `Bearer ${authTokens}` },
             });
             setTasks(tasks.filter(task => task._id !== taskId));
+            
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
+            toast.error(error.response ? error.response.data.message : error.message);
         }
     };
 
@@ -95,7 +101,7 @@ const Dashboard = () => {
         try {
             const task = tasks.find(task => task._id === taskId);
             const updatedTask = { ...task, status: newStatus };
-            
+
             // Update task status in the backend
             await api.put(`/tasks/${taskId}`, updatedTask, {
                 headers: { Authorization: `Bearer ${authTokens}` },
@@ -103,8 +109,10 @@ const Dashboard = () => {
 
             // Update task status in the local state
             setTasks(tasks.map(task => (task._id === taskId ? updatedTask : task)));
+            
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
+            toast.error(error.response ? error.response.data.message : error.message);
         }
     };
 
