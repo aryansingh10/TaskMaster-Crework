@@ -43,6 +43,15 @@ const Task = ({ task, onEdit, onDelete }) => {
         });
     };
 
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
     return (
         <div ref={drag} className="bg-gray-100 p-4 mb-4 rounded-lg shadow-md">
             <h3 className="text-lg font-bold">{task.title}</h3>
@@ -50,7 +59,7 @@ const Task = ({ task, onEdit, onDelete }) => {
             <p className={`${priorityClasses[task.priority]}`}>
                 {task.priority}
             </p>
-            <p>{new Date(task.deadline).toLocaleDateString()}</p>
+            <p>{formatDate(task.deadline)}</p>
             <div className="flex justify-between items-center mt-2">
                 <button
                     onClick={() => onEdit(task)}
