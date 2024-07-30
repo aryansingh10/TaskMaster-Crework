@@ -3,7 +3,6 @@ const Task = require('../models/Task');
 const { isAuthenticated } = require('../middleware/auth');
 const router = express.Router();
 
-// Get all tasks for the logged-in user
 router.get('/', isAuthenticated, async (req, res) => {
     try {
         const tasks = await Task.find({ userId: req.user._id });
@@ -13,7 +12,7 @@ router.get('/', isAuthenticated, async (req, res) => {
     }
 });
 
-// Create a new task
+
 router.post('/', isAuthenticated, async (req, res) => {
     try {
         const newTask = new Task({ ...req.body, userId: req.user._id });
@@ -24,7 +23,7 @@ router.post('/', isAuthenticated, async (req, res) => {
     }
 });
 
-// Update a task
+
 router.put('/:id', isAuthenticated, async (req, res) => {
     try {
         const task = await Task.findOneAndUpdate(
@@ -41,7 +40,7 @@ router.put('/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-// Delete a task
+
 router.delete('/:id', isAuthenticated, async (req, res) => {
     try {
         const task = await Task.findOneAndDelete(

@@ -102,12 +102,12 @@ const Dashboard = () => {
             const task = tasks.find(task => task._id === taskId);
             const updatedTask = { ...task, status: newStatus };
 
-            // Update task status in the backend
+         
             await api.put(`/tasks/${taskId}`, updatedTask, {
                 headers: { Authorization: `Bearer ${authTokens}` },
             });
 
-            // Update task status in the local state
+         
             setTasks(tasks.map(task => (task._id === taskId ? updatedTask : task)));
             
         } catch (error) {

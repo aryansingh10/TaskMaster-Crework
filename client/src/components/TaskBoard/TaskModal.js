@@ -5,27 +5,26 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
 
     const { title = '', description = '', status = 'To-Do', priority = 'Low', deadline = '' } = task;
 
-    // Get today's date in yyyy-mm-dd format
+   
     const today = new Date().toISOString().split('T')[0];
 
-    // Format the date to dd/mm/yyyy
+   
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
-        return new Intl.DateTimeFormat('en-GB').format(date); // 'en-GB' locale formats date to dd/mm/yyyy
+        return new Intl.DateTimeFormat('en-GB').format(date); 
     };
 
-    // Parse the date from yyyy-mm-dd to dd/mm/yyyy for display
+
     const parseDate = (dateString) => {
         if (!dateString) return '';
         const [year, month, day] = dateString.split('-').map(Number);
-        return new Intl.DateTimeFormat('en-GB').format(new Date(year, month - 1, day)); // 'en-GB' locale formats date to dd/mm/yyyy
+        return new Intl.DateTimeFormat('en-GB').format(new Date(year, month - 1, day)); 
     };
 
-    // Format deadline for display in the date input
     const formattedDeadline = deadline ? deadline.split('T')[0] : '';
 
-    // Define classes for priority based on its value
+
     const priorityClasses = {
         Low: 'border-green-500 text-green-500',
         Medium: 'border-yellow-500 text-yellow-500',

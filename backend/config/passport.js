@@ -7,13 +7,13 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-// Local Strategy
+
 passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// JWT Strategy
+
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_SECRET

@@ -22,21 +22,21 @@ app.use(
     })
   );//imp
   app.use(bodyParser.json());
-  app.use(express.urlencoded({extended : false})) // imp
+  
+  app.use(express.urlencoded({extended : false})) 
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Set secure to true if using HTTPS
+    cookie: { secure: false }, 
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 
-// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: 'Something went wrong!' });

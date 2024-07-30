@@ -2,9 +2,9 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from './constants';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import toast from 'react-hot-toast'; // Import react-hot-toast for notifications
-import { confirmAlert } from 'react-confirm-alert'; // Import react-confirm-alert
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS for react-confirm-alert
+import toast from 'react-hot-toast'; 
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; t
 
 const Task = ({ task, onEdit, onDelete }) => {
     const [, drag] = useDrag({
@@ -12,7 +12,6 @@ const Task = ({ task, onEdit, onDelete }) => {
         item: { id: task._id, status: task.status },
     });
 
-    // Define classes for priority based on its value
     const priorityClasses = {
         Low: 'text-green-500 font-bold',
         Medium: 'text-yellow-500 font-bold',
