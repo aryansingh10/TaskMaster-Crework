@@ -105,6 +105,7 @@ const TaskModal = ({ show, onClose, onChange, onSubmit, task = {} }) => {
                             onChange={onChange}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             min={today}
+                            required
                         />
                     </div>
                     <div className="flex justify-end space-x-4">
