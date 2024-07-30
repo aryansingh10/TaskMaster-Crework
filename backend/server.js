@@ -15,13 +15,14 @@ const taskRoutes = require('./routes/tasks');
 const app = express();
 
 // Middleware
-app.use(cors(
-    {
-        origin: 'https://task-master-crework.vercel.app/',
-        methods: ['GET', 'POST', 'PUT', 'DELETE']
-    }
-));
-app.use(bodyParser.json());
+app.use(
+    cors({
+      origin: "*",
+      credentials: true,
+    })
+  );//imp
+  app.use(bodyParser.json());
+  app.use(express.urlencoded({extended : false})) // imp
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,

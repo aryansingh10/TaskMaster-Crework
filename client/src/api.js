@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://task-master-six-nu.vercel.app/',
+    baseURL: 'http://localhost:5000/api',
 });
 
 export default api;
