@@ -4,7 +4,7 @@ import { ItemTypes } from './constants';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast'; 
 import { confirmAlert } from 'react-confirm-alert'; 
-import 'react-confirm-alert/src/react-confirm-alert.css'; t
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 const Task = ({ task, onEdit, onDelete }) => {
     const [, drag] = useDrag({
