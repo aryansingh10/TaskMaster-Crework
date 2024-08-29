@@ -1,9 +1,12 @@
+// backend/routes/auth.js
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 const User = require('../models/User');
+const sendEmail = require('../middleware/mailer');
 const router = express.Router();
-
 
 router.post('/signup', async (req, res) => {
     try {
@@ -14,6 +17,11 @@ router.post('/signup', async (req, res) => {
 
         const user = new User({ email });
         await User.register(user, password);
+
+        // Send welcome email
+        const emailInfo = await sendEmail(email, 'Welcome to TaskMaster', 'Thank you for signing up!', '<h1>Thank you for signing up!</h1>');
+        console.log('Email response:', emailInfo);
+
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         console.error('Signup error:', error);
@@ -23,7 +31,6 @@ router.post('/signup', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
-
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
