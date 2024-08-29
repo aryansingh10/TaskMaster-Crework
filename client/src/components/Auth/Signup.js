@@ -10,16 +10,23 @@ const Signup = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null); // Clear previous errors
         try {
             await signup(email, password);
             toast.success('Signup successful!');
             navigate('/dashboard');
-
         } catch (error) {
-            setError('Failed to create an account');
-            toast.error('A user with this email already exists');
+            // Set the error message based on the error received
+            if (error.response && error.response.data) {
+                setError(error.response.data.message || 'Failed to create an account');
+                toast.error(error.response.data.message || 'An error occurred');
+            } else {
+                setError('Failed to create an account');
+                toast.error('An error occurred');
+            }
         }
     };
 

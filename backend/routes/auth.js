@@ -1,4 +1,3 @@
-// backend/routes/auth.js
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -15,7 +14,10 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'Email and password are required' });
         }
 
+        // Create a new user
         const user = new User({ email });
+
+        // Register user with passport-local-mongoose
         await User.register(user, password);
 
         // Send welcome email
@@ -33,7 +35,7 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local', { session: false }, (err, user, info) => {
+    passport.authenticate('local', (err, user, info) => {
         if (err) {
             console.error('Authentication error:', err);
             return res.status(500).json({ message: 'Authentication error' });
@@ -42,7 +44,7 @@ router.post('/login', (req, res, next) => {
             return res.status(400).json({ message: info ? info.message : 'Login failed' });
         }
 
-        req.login(user, { session: false }, (err) => {
+        req.logIn(user, { session: false }, (err) => {
             if (err) {
                 console.error('Login error:', err);
                 return res.status(500).json({ message: 'Login error' });
