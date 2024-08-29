@@ -18,6 +18,8 @@ const taskRoutes = require('./routes/tasks');
 const app = express();
 
 // Middlewaregi
+
+
 app.use(
     cors({
       origin: "*",
@@ -25,8 +27,12 @@ app.use(
     })
   );//imp
   app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
   
   app.use(express.urlencoded({extended : false})) 
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -50,14 +56,14 @@ app.get('/', (req, res) => {
 
 cron.schedule('0 * * * *', async () => {
     try {
-        // Find tasks that are due within the next 24 hours and are not completed
+        
         const upcomingTasks = await Task.find({
             deadline: {
-                $gte: new Date(), // greater than or equal to now
-                $lte: new Date(Date.now() + 24 * 60 * 60 * 1000) // less than or equal to 24 hours from now
+                $gte: new Date(),
+                $lte: new Date(Date.now() + 24 * 60 * 60 * 1000) 
             },
-            status: { $ne: 'Completed' } // Assuming a task isn't completed
-        }).populate('userId'); // Populate the user info from User model
+            status: { $ne: 'Completed' }
+        }).populate('userId'); 
 
         upcomingTasks.forEach(task => {
             sendEmail(
