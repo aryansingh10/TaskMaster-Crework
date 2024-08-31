@@ -20,14 +20,14 @@ router.post('/signup', async (req, res) => {
         // Register user with passport-local-mongoose
         await User.register(user, password);
 
-        try {
-            // Send welcome email
-            const emailInfo = await sendEmail(email, 'Welcome to TaskMaster', 'Thank you for signing up!', '<h1>Thank you for signing up!</h1>');
-            console.log('Email response:', emailInfo);
-        } catch (emailError) {
-            console.error('Email sending error:', emailError);
-            return res.status(500).json({ message: 'User registered, but email sending failed' });
-        }
+        // Send welcome email (non-blocking)
+        sendEmail(email, 'Welcome to TaskMaster', 'Thank you for signing up!', '<h1>Thank you for signing up!</h1>')
+            .then(emailInfo => {
+                console.log('Email response:', emailInfo);
+            })
+            .catch(emailError => {
+                console.error('Email sending error:', emailError); // Log error but don't block registration
+            });
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
@@ -38,6 +38,9 @@ router.post('/signup', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+module.exports = router;
+
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
