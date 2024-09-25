@@ -9,7 +9,7 @@ const Task = require('./models/Task');
 const cors = require('cors');
 require('dotenv').config();
 
-// Passport configuration
+
 require('./config/passport');
 
 const authRoutes = require('./routes/auth');
@@ -67,7 +67,7 @@ cron.schedule('0 * * * *', async () => {
 
         upcomingTasks.forEach(task => {
             sendEmail(
-                task.userId.email, // Assuming user has an email field
+                task.userId.email, 
                 'Task Deadline Approaching',
                 `Your task "${task.title}" is due soon. Please complete it by the deadline.`,
                 `<h3>Your task "${task.title}" is due soon.</h3><p>Please complete it by the deadline.</p>`
